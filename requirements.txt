@@ -1,5 +1,8 @@
 #aiofiles
 #asyncssh
+beautifulsoup4
+lxml       #Ssupport beautiful soup
+curl-cffi
 docker
 fastapi
 #jinja2
@@ -14,6 +17,7 @@ python-dateutil
 python-multipart
 #pyyaml
 requests
+typing
 #rq
 #rq-scheduler
 #sqlalchemy
