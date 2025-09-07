@@ -1,7 +1,7 @@
 from typing import Any, List
 
-import curl_cffi
-from bs4 import BeautifulSoup as bs
+import curl_cffi   # used for requesting data from web pages
+from bs4 import BeautifulSoup as bs  #used to pard web page data
 
 #from curl_cffi import requests
 import json
