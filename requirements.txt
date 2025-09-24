@@ -17,6 +17,7 @@ python-dateutil
 python-multipart
 #pyyaml
 requests
+scapy
 typing
 #rq
 #rq-scheduler

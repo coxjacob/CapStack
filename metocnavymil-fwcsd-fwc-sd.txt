@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, user-scalable=yes, minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>Fleet Weather Center San Diego CA</title>
+    <link rel="shortcut icon" href="images/FWC-Logo-40x40.ico" />
+    <link rel="apple-touch-icon" href="images/FWC-Logo-40x40.png"/>
+    <!-- Path to Framework7 Library CSS-->
+    <link rel="stylesheet" href="css/framework7.ios.min.css">
+    <link rel="stylesheet" href="css/framework7.ios.colors.min.css">
+    <!-- Path to your custom app styles-->
+    <link rel="stylesheet" href="css/aws-app.css">
+  </head>
+  <body>
+    <div id="header">
+      <img id="header_image" src="../images/logo.png" height="225" alt="nop-logo"/>
+      <div id="header_label">Fleet Weather Center San Diego CA</div>
+    </div><!-- close div#header -->
+    <!-- Status bar overlay for fullscreen mode-->
+    <div class="statusbar-overlay"></div>
+    <!-- Views-->
+    <div class="views">
+      <!-- Put panels-overlay and left-panel with view inside of views-->
+      <!-- Panels overlay-->
+      <div class="panel-overlay"></div>
+      <!-- Left panel with reveal effect-->
+      <div class="panel panel-left panel-cover">
+        <!-- Left view-->
+        <div class="view view-left navbar-through">
+          <div class="navbar">
+            <div class="navbar-inner">
+              <div class="left"></div>
+              <div class="center sliding">MENU</div>
+              <div class="right"></div>
+            </div>
+          </div>
+          <div class="pages">
+            <div data-page="index-left" class="page">
+              <div class="page-content">
+                <div class="list-block inset">
+                  <ul>
+                    <li>
+                      <a href="warnings.html" data-view=".view-main" class="item-link close-panel">
+                        <div class="item-content">
+                          <div class="item-inner">
+                            <div class="item-title">Warning/Advisory</div>
+                          </div>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="outlooks.html" data-view=".view-main" class="item-link close-panel">
+                        <div class="item-content">
+                          <div class="item-inner">
+                            <div class="item-title">Outlooks</div>
+                          </div>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="forecasts.html" data-view=".view-main" class="item-link close-panel">
+                        <div class="item-content">
+                          <div class="item-inner">
+                            <div class="item-title">Forecasts</div>
+                          </div>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="analysis.html" data-view=".view-main" class="item-link close-panel">
+                        <div class="item-content">
+                          <div class="item-inner">
+                            <div class="item-title">Analysis</div>
+                          </div>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="observations.html" data-view=".view-main" class="item-link close-panel">
+                        <div class="item-content">
+                          <div class="item-inner">
+                            <div class="item-title">Observations</div>
+                          </div>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="remotesensing.html" data-view=".view-main" class="item-link close-panel">
+                        <div class="item-content">
+                          <div class="item-inner">
+                            <div class="item-title">Remote Sensing</div>
+                          </div>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="swr.html" data-view=".view-main" class="item-link close-panel">
+                        <div class="item-content">
+                          <div class="item-inner">
+                            <div class="item-title">Suppl Wx Radar</div>
+                          </div>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="geospatial_kml.html" data-view=".view-main" class="item-link close-panel">
+                        <div class="item-content">
+                          <div class="item-inner">
+                            <div class="item-title">KML/KMZ</div>
+                          </div>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="links_nws.html" data-view=".view-main" class="item-link close-panel">
+                        <div class="item-content">
+                          <div class="item-inner">
+                            <div class="item-title">NWS Links</div>
+                          </div>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="links_other.html" data-view=".view-main" class="item-link close-panel">
+                        <div class="item-content">
+                          <div class="item-inner">
+                            <div class="item-title">Other Weather Links</div>
+                          </div>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="info_commands.html" data-view=".view-main" class="item-link close-panel">
+                        <div class="item-content">
+                          <div class="item-inner">
+                            <div class="item-title">Information</div>
+                          </div>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#" data-view=".view-main" class="back item-link close-panel">
+                        <div class="item-content">
+                          <div class="item-inner">
+                            <div class="item-title">Back in history</div>
+                          </div>
+                        </div>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Right view, it is main view-->
+      <div class="view view-main navbar-through">
+        <div class="navbar">
+          <div class="navbar-inner">
+            <div id="contentLable" class="center sliding">Fleet Weather Center San Diego</div>
+            <div class="right">
+              <a href="#" data-panel="left" class="link open-panel icon-only"><i class="icon icon-bars theme-white"></i></a>
+            </div>
+          </div>
+        </div>
+        <div class="toolbar toolbar-bottom">
+          <div class="toolbar-inner">
+            <a href="#" class="button" style="font-size: 0.625em; width: 6.0em;" onclick="noticeRSS('products/rss/notices/notices.rss');">Notices</a>
+            <span style="text-align: center; font-family: Arial; font-size: 0.625em; border: 0.0625em; width: 50%;">
+              Command Duty Officer<br>
+              COMM 619-767-1271<br>DSN 564-7583
+            </span>
+            <a href="mailto:fwcsd-cdo.fct@navy.mil" class="external button" style="font-size: 0.625em; width: 6.0em;">Email</a>
+          </div>
+        </div>
+        <!-- Pages-->
+        <div class="pages">
+          <!-- Page, data-page contains page name which is main in the below case-->
+          <div data-page="main" class="page">
+            <!-- Scrollable page content-->
+            <div class="page-content">
+              <div class="content-block-title">MISSION</div>
+              <div class="content-block">
+                <div class="content-block-inner">
+                  <p>FWC-SD and subordinate activities keep the Fleet safe from hazardous weather
+                    and enable effective operations and planning decisions by providing timely
+                    and accurate aviation, maritime, and installation weather forecasts,
+                    warnings, and recommendations. Provide support to Fleet operations and
+                    deploy certified teams that provide tactical warfighting advantage for
+                    strike and amphibious forces through application of oceanographic and
+                    meteorological sciences; provide meteorological and oceanographic (METOC)
+                    forecasts and warnings to enable decision superiority in direct support of
+                    Carrier Strike Group (CSG), Expeditionary Strike Group (ESG), and Amphibious
+                    Readiness Group (ARG) Commanders, and embarked staffs, as well as, other
+                    Navy, Joint and multi-national forces as assigned.  Provide the direct
+                    oversight of training, maintenance, certification, operations, and readiness
+                    of assigned subordinate activities.</p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Path to Framework7 Library JS-->
+    <script type="text/javascript" src="js/framework7.min.js"></script>
+    <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+    <!-- Path to your app js-->
+    <script type="text/javascript" src="js/aws-app.js"></script>
+  </body>
+</html>

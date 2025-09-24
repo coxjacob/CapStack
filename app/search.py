@@ -31,7 +31,8 @@ def parse_days_saves(data: str) -> List[Any]:
 if __name__ == "__main__":
     if not Path("data.txt").is_file():
         print("File not found, retrieving data...")
-        address = "3840-Boulder-Creek-Rd-Martinez-GA-30907/83373999_zpid/"
+        #address = "3840-Boulder-Creek-Rd-Martinez-GA-30907/83373999_zpid/"
+        address = "161-Hickory-Dr-S-Martinez-GA-30907/14209886_zpid/"
         target_url = "https://www.zillow.com/homedetails/"
         raw_text = retrieve_data(target_url, address)
         print(type(raw_text))
@@ -43,17 +44,33 @@ if __name__ == "__main__":
             raw_text = f.read()
     
     soup = bs(raw_text, 'html.parser')
+    zillow_data = {}
+
+    # Collect Zestimate Value
+    zestimate = soup.find_all('div', {'class':["styles__StyledPriceAndBathWrapper-fshdp-8-111-1__sc-ncazb7-1 jCFmeF",
+                                               "Text-c11n-8-111-1__sc-aiai24-0 sc-hAQmFe bzMbAh dcvJrC"]})
+    print(type(zestimate))
+    for z in zestimate:
+        zillow_data.setdefault('zestimate', z.text)
+
     # Collect days on market and saves
     days = soup.find_all('dl', {'class':'styles__StyledOverviewStats-fshdp-8-111-1__sc-1x11gd9-0 kpgmGL'})
     for day in days:
         print(day.text)
         days_saves = parse_days_saves(day.text)
-        print(days_saves) # [days, saves]
+        zillow_data.setdefault('days', days_saves[0]) 
+        zillow_data.setdefault('saves', days_saves[1])
 
-    # This code still does not work, need to find a way to extract Zestimate value
-    zestimate = soup.find_all('span', {'class':"Text-c11n-8-111-1__sc-aiai24-0 sc-WKhSL hZAvJt ivuDGZ"})
-    print(zestimate)
-    for z in zestimate:
-        print(z.text)
+    print("Geting years")
+    years = soup.find_all('div', {'class':"styles__StyledCategories-fshdp-8-111-1__sc-1mj0p8k-0 fJbWJL"})
+    for year in years:
+        print(year.text)
+    print("Missed it")
+    # Get beds
+    beds = soup.find_all('span', {'class':"Text-c11n-8-111-1__sc-aiai24-0 StyledHeading-c11n-8-111-1__sc-s7fcif-0 gqVRdW styles__StyledFactCategoryHeading-fshdp-8-111-1__sc-1i5yjpk-2 dqRTUj"})
+    for bed in beds: 
+        zillow_data.setdefault('beds', bed.text)
 
 
+
+    print(zillow_data)
