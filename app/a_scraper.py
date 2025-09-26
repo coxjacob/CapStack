@@ -5,6 +5,7 @@ import curl_cffi   # used for requesting data from web pages
 import json
 import re
 import logging
+import hashlib
 
 from bs4 import BeautifulSoup as bs  #used to pard web page data
 #import lxml import etree could not get etree to be recognized 
@@ -20,7 +21,7 @@ def create_filename(url: str) -> str:
     return filename
 
 def retrieve_data(target_url: str) -> list:
-    "Obtain raw text and dat from URL"
+    "Obtain raw text and data from URL"
     r = curl_cffi.get(target_url, 
                       impersonate="chrome", 
                       headers={"Accept-Language": "en-US,en;q=0.9"})
@@ -46,37 +47,39 @@ def get_url_raw_text(filename: str, target_url: str) -> str:
             raw_text = f.read()    
     return raw_text
 
+def parse_raw_text(raw_text: str, pattern: str) -> dict:
+    "Parse raw text with BeautifulSoup returning dictionary hash: href, title, text"
+    crawled_data = {}
+    if raw_text != "": 
+        soup = bs(raw_text, "html.parser")
+        target_divs = soup.find_all('div', class_='content-block-item result')
+        if target_divs:
+            for target_div in target_divs:
+                links = target_div.find_all('a')
+                for link in links:
+                    href = link.get('href')
+                    title = link.get_text()
+                
+                div_text = target_div.get_text(separator=" ", strip=True)
+                match = re.findall(pattern, div_text, re.IGNORECASE)
+                if len(match) > 1 and match[0] not in match[1:]:
+                    print(match)
+                    encoded_string = title.encode('utf-8')
+                    sha256_hash = hashlib.sha256(encoded_string).hexdigest()
+                    crawled_data.setdefault(sha256_hash, [href, title, div_text])
+    else:
+        logging.info(f"No text to parse.")
+    return crawled_data
 
 if __name__ == "__main__":
-    target_search = "submarine+russian"
-    #url = "https://search.usa.gov/search?affiliate=defense_gov&query=submarine"
+    target_search = "russian+submarine"
+    pattern = r"russian|submarine"
     url = f"https://search.usa.gov/search?affiliate=defense_gov&sort_by=&query={target_search}"
     print (url)
     filename = create_filename(str(url))
     raw_text = get_url_raw_text(filename, url)
-    
-    if raw_text != "": 
-        #print(raw_text[:300])
-        soup = bs(raw_text, "html.parser")
-        target_divs = soup.find_all('div', class_='content-block-item result')
-        if target_divs:
-            count = 0
-            for target_div in target_divs:
-                print(f"Number {count}: ")
-                links = target_div.find_all('a')
-                for link in links:
-                    href = link.get('href')
-                    h_name = link.get_text()
-                
-                div_text = target_div.get_text(separator=" ", strip=True)
-                if 'submarin' in div_text:
-                    print(div_text)
-                    print(f"Link: {h_name} - {href} ")
-                    # print these to a JSON
-                    # Let's let an LLM intuit whether the title or text indicates we should read more about the file 
-                print()
-                count +=1
-        #print(matches)
-    else:
-        print("No text")
- 
+    crawled_data = parse_raw_text(raw_text, pattern)
+
+    #print(crawled_data.keys())
+    for k, v in crawled_data.items():
+        print(v[2])  #first entry is the link, title, text
