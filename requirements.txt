@@ -6,7 +6,7 @@ curl-cffi
 docker
 fastapi
 #jinja2
-#ollama
+ollama
 #psycopg2-binary
 #paramiko
 pydantic
@@ -23,7 +23,7 @@ typing
 #rq-scheduler
 #sqlalchemy
 #tqdm
-#transformers
-#uvicorn
-#uvicorn[standard]
+transformers
+uvicorn
+uvicorn[standard]
 #websockets
