@@ -34,4 +34,9 @@ You can interact with the API and view the automatically generated documentation
 
 
 # To Dos
-[File to download and process](https://www.dia.mil/Portals/110/Documents/SFR/DIA%202022%20ATA%20SFR.pdf)
+[China File to download and process](https://www.dia.mil/Portals/110/Documents/SFR/DIA%202022%20ATA%20SFR.pdf)
+
+[Korean File to download](https://www.dia.mil/Portals/110/Documents/News/NKMP.pdf)
+
+[Read GitHub](https://github.com/samwit/langchain-tutorials)
+
