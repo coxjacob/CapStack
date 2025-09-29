@@ -15,13 +15,18 @@ logging.basicConfig(level=logging.INFO,
                     format='%(asctime)s - %(levelname)s - %(message)s')
 
 def create_filename(url: str) -> str:
-    "Use URL to create unique file name."
+    """
+    Use URL to create unique file name. URL content will be stored
+    here to avoid multiple requests to same URL.
+    """
     filename = url.split('//')[-1].replace('.','-').replace('/','-') + ".txt"
     logging.info(f"Created file: {filename}")
     return filename
 
 def retrieve_data(target_url: str) -> list:
-    "Obtain raw text and data from URL"
+    """
+    Request data from URL. Return status code and text.
+    """
     r = curl_cffi.get(target_url, 
                       impersonate="chrome", 
                       headers={"Accept-Language": "en-US,en;q=0.9"})
@@ -30,7 +35,10 @@ def retrieve_data(target_url: str) -> list:
     return [status, r.text]
 
 def get_url_raw_text(filename: str, target_url: str) -> str:
-    "Extract raw text from URL if first use or file if subsequent use"
+    """
+    Extract raw text from URL if first call or from file if 
+    subsequent calls. Return raw text.
+    """
     logging.info(f"Getting raw text from {filename} or {target_url}")
     if not Path(filename).is_file():
         print("File not found, retrieving data...")
@@ -48,7 +56,10 @@ def get_url_raw_text(filename: str, target_url: str) -> str:
     return raw_text
 
 def parse_raw_text(raw_text: str, pattern: str) -> dict:
-    "Parse raw text with BeautifulSoup returning dictionary hash: href, title, text"
+    """
+    Use BeautifulSoup to parse raw text and return dictionary:  
+    {title_hash: href, title, text
+    """
     crawled_data = {}
     if raw_text != "": 
         soup = bs(raw_text, "html.parser")
@@ -65,8 +76,8 @@ def parse_raw_text(raw_text: str, pattern: str) -> dict:
                 if len(match) > 1 and match[0] not in match[1:]:
                     print(match)
                     encoded_string = title.encode('utf-8')
-                    sha256_hash = hashlib.sha256(encoded_string).hexdigest()
-                    crawled_data.setdefault(sha256_hash, [href, title, div_text])
+                    title_hash = hashlib.sha256(encoded_string).hexdigest()
+                    crawled_data.setdefault(title_hash, [href, title, div_text])
     else:
         logging.info(f"No text to parse.")
     return crawled_data

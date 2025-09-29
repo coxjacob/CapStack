@@ -4,3 +4,4 @@ httpx
 ollama
 langchain-ollama
 pydantic
+chromadb

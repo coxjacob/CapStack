@@ -7,8 +7,10 @@ RUN apt-get update && apt-get install -y \
     procps \
     && rm -rf /var/lib/apt/lists/*
 
+# Install Ollama
 RUN curl -fsSL https://ollama.com/install.sh | sh
 
+# Preload the model / Consider other models as needed
 RUN ollama start & \
     sleep 5 && \
     ollama run llama3.2:1b && \
